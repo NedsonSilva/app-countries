@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { CountriesService } from 'src/app/core/services/countries/countries.service';
 
 import { Countries } from './../../core/services/countries/countries.model';
@@ -11,8 +11,10 @@ import { ThemesService } from './../../core/services/themes/themes.service';
   templateUrl: './country-details.component.html',
   styleUrls: ['./country-details.component.scss']
 })
-export class CountryDetailsComponent implements OnInit {
+export class CountryDetailsComponent implements OnInit, OnDestroy {
   country$: Observable<Countries>
+
+  private unsubs = new Subject()
 
   constructor(
     private countriesService: CountriesService,
@@ -21,13 +23,26 @@ export class CountryDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const code = this.route.snapshot.paramMap.get('code')
-    this.country$ = this.countriesService.getByCode(code)
+    this.route.paramMap.pipe(takeUntil(this.unsubs)) .subscribe(params => {
+      this.country$ = this.countriesService.getByCode(params.get('code'))
+      this.country$.subscribe(console.log)
+    })
+
   }
 
   get iconArrowLeft() {
     const prefix = this.themeService.currentTheme == 'light' ? 'dark' : 'light'
     return `assets/icons/svg/arrow-left-${prefix}.svg`
+  }
+
+  goToBorderCountries(data: string) {
+
+  }
+
+
+  ngOnDestroy(): void {
+    this.unsubs.next(null)
+    this.unsubs.complete()
   }
 
 }

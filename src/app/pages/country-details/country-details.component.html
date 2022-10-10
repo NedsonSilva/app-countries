@@ -53,9 +53,13 @@
 
       <div class="border-countries">
         <span> Border countries: </span>
-        <span class="border-countries-item" *ngFor="let borders of country.borders">
+        <a
+          class="border-countries-item"
+          *ngFor="let borders of country.borders"
+          [routerLink]="['/list', borders, 'details']"
+        >
           {{ borders }}
-        </span>
+        </a>
       </div>
     </div>
   </ng-container>
