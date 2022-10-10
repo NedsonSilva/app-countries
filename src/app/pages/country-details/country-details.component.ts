@@ -9,40 +9,32 @@ import { ThemesService } from './../../core/services/themes/themes.service';
 @Component({
   selector: 'app-country-details',
   templateUrl: './country-details.component.html',
-  styleUrls: ['./country-details.component.scss']
+  styleUrls: ['./country-details.component.scss'],
 })
 export class CountryDetailsComponent implements OnInit, OnDestroy {
-  country$: Observable<Countries>
+  country$: Observable<Countries>;
 
-  private unsubs = new Subject()
+  private unsubs = new Subject();
 
   constructor(
     private countriesService: CountriesService,
     private route: ActivatedRoute,
     private themeService: ThemesService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(takeUntil(this.unsubs)) .subscribe(params => {
-      this.country$ = this.countriesService.getByCode(params.get('code'))
-      this.country$.subscribe(console.log)
-    })
-
+    this.route.paramMap.pipe(takeUntil(this.unsubs)).subscribe((params) => {
+      this.country$ = this.countriesService.getByCode(params.get('code'));
+    });
   }
 
   get iconArrowLeft() {
-    const prefix = this.themeService.currentTheme == 'light' ? 'dark' : 'light'
-    return `assets/icons/svg/arrow-left-${prefix}.svg`
+    const prefix = this.themeService.currentTheme == 'light' ? 'dark' : 'light';
+    return `assets/icons/svg/arrow-left-${prefix}.svg`;
   }
-
-  goToBorderCountries(data: string) {
-
-  }
-
 
   ngOnDestroy(): void {
-    this.unsubs.next(null)
-    this.unsubs.complete()
+    this.unsubs.next(null);
+    this.unsubs.complete();
   }
-
 }

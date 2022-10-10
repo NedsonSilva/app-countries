@@ -14,14 +14,11 @@ export class ThemesService {
     light: themeLight,
   };
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
-    const userPreferenceTheme: ThemeTypes =
-      (localStorage.getItem('theme') as ThemeTypes) || 'light';
-    this.setTheme(userPreferenceTheme);
-  }
+  private _currentTheme: ThemeTypes = 'light'
 
-  private setCurrentThemeToStorage() {
-    localStorage.setItem('theme', this.currentTheme);
+  constructor(@Inject(DOCUMENT) private document: Document) {
+    const localStorageTheme = localStorage.getItem('app-countries-theme') as ThemeTypes
+    this.setTheme(localStorageTheme || this.currentTheme);
   }
 
   setTheme(theme: ThemeTypes) {
@@ -35,7 +32,7 @@ export class ThemesService {
 
     element.classList.remove(`${themeRemove}-theme`);
     element.classList.add(`${currentTheme.name}-theme`);
-    this.setCurrentThemeToStorage();
+    this.currentTheme = theme
   }
 
   private get bodyEl(): HTMLBodyElement {
@@ -43,7 +40,11 @@ export class ThemesService {
   }
 
   get currentTheme(): ThemeTypes {
-    const isLightTheme = this.bodyEl.classList.contains('light-theme');
-    return isLightTheme ? 'light' : 'dark';
+    return this._currentTheme
+  }
+
+  private set currentTheme(theme: ThemeTypes) {
+    localStorage.setItem('app-countries-theme', theme)
+    this._currentTheme = theme
   }
 }
