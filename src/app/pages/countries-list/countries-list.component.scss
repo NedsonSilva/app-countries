@@ -25,6 +25,11 @@ header {
     transition: box-shadow .2s;
     height: 50px;
 
+    @media (max-width: 600px) {
+      padding: 1rem;
+    }
+
+
     &:hover {
       box-shadow: var(--box-shadow-hover);
     }
