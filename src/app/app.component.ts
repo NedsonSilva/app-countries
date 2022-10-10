@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { ThemesService } from './core/services/themes/themes.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'app-countries';
+  constructor(private themeService: ThemesService) {}
 }

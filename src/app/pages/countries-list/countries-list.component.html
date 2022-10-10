@@ -1,0 +1,28 @@
+<header>
+  <div class="input-search-container">
+    <img class="icon" [src]="iconSearch" alt="">
+    <input type="text" (change)="getByName($event.target.value)" placeholder="Search for a country...">
+  </div>
+  <ng-select class="select" placeholder="Filter by Region" (change)="getByRegion($event)">
+    <ng-option *ngFor="let region of regions$|async" [value]="region">{{region}}</ng-option>
+  </ng-select>
+</header>
+
+<section class="cards-container">
+  <ng-container *ngIf="countries$ | async  as countries; else loading">
+    <app-card
+      [routerLink]="[country.cioc, 'details']"
+      *ngFor="let country of countries"
+      [imgSrc]="country.flags.png"
+      [title]="country.name.common"
+      [capital]="country.capital?.length && country.capital[0]"
+      [region]="country.region"
+      [population]="country.population"
+    >
+    </app-card>
+    <span *ngIf="countries.length == 0" class="text-not-found">
+      No country found!! Try again
+    </span>
+  </ng-container>
+  <ng-template #loading> <app-spinner></app-spinner> </ng-template>
+</section>

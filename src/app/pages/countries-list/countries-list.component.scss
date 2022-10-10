@@ -1,0 +1,127 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem 3rem;
+
+  @media (max-width: 600px) {
+    .input-search-container {
+      flex: 1;
+    }
+  }
+
+  .input-search-container {
+    display: flex;
+    align-items: center;
+    background: var(--primary);
+    width: max-content;
+    gap: 1rem;
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    padding-right: 0;
+    transition: box-shadow .2s;
+    height: 50px;
+
+    &:hover {
+      box-shadow: var(--box-shadow-hover);
+    }
+
+
+    .icon {
+      width: 22px;
+    }
+
+    input {
+      background: none;
+      border: none;
+      outline: none;
+      height: 100%;
+      color: var(--text-color);
+
+      &::placeholder {
+        color: var(--text-color);
+        opacity: .7;
+      }
+    }
+  }
+}
+
+::ng-deep ng-select {
+  height: 50px;
+
+  @media (max-width: 600px) {
+    margin-right: auto;
+  }
+
+
+  &.select,
+  &.select.ng-select-opened {
+    border-radius: 5px;
+    background: var(--primary);
+    min-width: 200px;
+
+    .ng-select-container {
+      height: 100% !important;
+      box-shadow: var(--box-shadow);
+      border: none;
+      transition: box-shadow .2s;
+      background: var(--primary);
+      color: var(--text-color);
+
+      &:hover {
+        box-shadow: var(--box-shadow-hover);
+      }
+
+
+      .ng-value-container {
+
+        .ng-input,
+        input {
+          top: 14px !important;
+          color: var(--text-color);
+        }
+      }
+    }
+  }
+
+}
+
+::ng-deep .ng-dropdown-panel {
+  .ng-dropdown-panel-items .ng-option {
+    background: var(--primary);
+    color: var(--text-color);
+  }
+
+  .ng-dropdown-panel-items .ng-option.ng-option-marked {
+    background: var(--secondary);
+    color: var(--text-color);
+  }
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 3rem;
+  justify-content: space-between;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+
+    .input-search-container {
+      flex: 1;
+    }
+  }
+}
+
+app-spinner {
+  margin: 0 auto;
+}
+
+.text-not-found {
+  text-align: center;
+  flex: 1;
+}

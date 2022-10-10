@@ -1,0 +1,66 @@
+<a routerLink="/list" class="button-back">
+  <img [src]="iconArrowLeft" alt="">
+  <span>Back</span>
+</a>
+
+<section class="container">
+  <ng-container *ngIf="country$ | async as country; else loading">
+    <img [src]="country.flags.png" [alt]="country.name.common">
+
+    <div class="details">
+      <h1> {{ country.name.common }} </h1>
+
+      <ul>
+        <li>
+          <span> Native Name: </span>
+          {{ country.name.official }}
+        </li>
+        <li>
+          <span>Population: </span>
+          {{ country.population }}
+        </li>
+        <li>
+          <span>Region: </span>
+          {{ country.region }}
+        </li>
+        <li>
+          <span>Sub Region:</span>
+          {{ country.subregion }}
+        </li>
+        <li>
+          <span>Capital: </span>
+          {{ country.subregion }}
+        </li>
+        <li>
+          <span>Top level Domain: </span>
+          <ng-container *ngFor="let tld of country.tld">
+            {{ tld }}
+          </ng-container>
+        </li>
+        <li>
+          <span>Currencies:</span>
+          <ng-container *ngFor="let currency of country.currencies|keyvalue">
+            {{ country.currencies[currency.key].name }}
+          </ng-container>
+        </li>
+        <li>
+          <span>Languages:</span>
+          <ng-container *ngFor="let language of country.languages|keyvalue">
+            {{ language.value }}
+          </ng-container>
+        </li>
+      </ul>
+
+      <div class="border-countries">
+        <span> Border countries: </span>
+        <span class="border-countries-item" *ngFor="let borders of country.borders">
+          {{ borders }}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loading>
+    <app-spinner></app-spinner>
+  </ng-template>
+</section>
